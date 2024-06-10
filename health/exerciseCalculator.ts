@@ -43,7 +43,7 @@ const parseArguments2 = (args: string[]): Arguments => {
   if (args.length == 3) throw new Error("No training days provided in input");
 
   const target = Number(args[2]);
-  if (isNaN(target) || target > 24)
+  if (isNaN(target) || target < 0 || target > 24)
     throw new Error(
       `Failed to parse daily target value from ${args[2]}, parsed as ${target}`
     );
@@ -56,7 +56,6 @@ const parseArguments2 = (args: string[]): Arguments => {
         `Provided input ${args[i]}, as a number: ${number}, was not a valid representation of daily hours`
       );
     }
-    console.log(number);
     days.push(number);
   }
 
