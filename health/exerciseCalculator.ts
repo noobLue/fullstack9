@@ -1,42 +1,9 @@
-type Rating = 1 | 2 | 3;
-
-const ratingText = ["Too bad so sad", "Looking good", "Amazing work buddy!"];
-
-interface Exercise {
-  periodLength: number;
-  trainingDays: number;
-  target: number;
-  average: number;
-  success: boolean;
-  rating: Rating;
-  ratingDescription: string;
-}
+import { calculateExercises } from "./helper";
 
 interface Arguments {
   days: number[];
   target: number;
 }
-
-const calculateExercises = (dailyHours: number[], target: number): Exercise => {
-  const periodLength: number = dailyHours.length;
-  const average: number =
-    dailyHours.reduce((acc, h) => acc + h, 0) / periodLength;
-  let rating: Rating = 1;
-  if (average > target) rating = 2;
-  if (average > target * 2) rating = 3;
-
-  const exercise: Exercise = {
-    periodLength,
-    trainingDays: dailyHours.filter((h) => h > 0).length,
-    target,
-    average,
-    success: average > target,
-    rating,
-    ratingDescription: ratingText[rating - 1],
-  };
-
-  return exercise;
-};
 
 const parseArguments2 = (args: string[]): Arguments => {
   if (args.length <= 2) throw new Error("Missing target value");
@@ -59,11 +26,11 @@ const parseArguments2 = (args: string[]): Arguments => {
     days.push(number);
   }
 
-  return { days, target };
+  return { days, target } as Arguments;
 };
 
 try {
-  const input = parseArguments2(process.argv);
+  const input: Arguments = parseArguments2(process.argv);
   console.log(calculateExercises(input.days, input.target));
 } catch (error: unknown) {
   let errorMessage = "Error: ";

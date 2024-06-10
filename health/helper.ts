@@ -60,4 +60,45 @@ const calculateBmi = (height: number, weight: number): string => {
   return bmic.text;
 };
 
+/* Exercises */
+
+type Rating = 1 | 2 | 3;
+
+const ratingText = ["Too bad so sad", "Looking good", "Amazing work buddy!"];
+
+export interface Exercise {
+  periodLength: number;
+  trainingDays: number;
+  target: number;
+  average: number;
+  success: boolean;
+  rating: Rating;
+  ratingDescription: string;
+}
+
+export const calculateExercises = (
+  dailyHours: number[],
+  target: number
+): Exercise => {
+  console.log(dailyHours);
+  const periodLength: number = dailyHours.length;
+  const average: number =
+    dailyHours.reduce((acc, h) => acc + h, 0) / periodLength;
+  let rating: Rating = 1;
+  if (average > target) rating = 2;
+  if (average > target * 2) rating = 3;
+
+  const exercise: Exercise = {
+    periodLength,
+    trainingDays: dailyHours.filter((h) => h > 0).length,
+    target,
+    average,
+    success: average > target,
+    rating,
+    ratingDescription: ratingText[rating - 1],
+  };
+
+  return exercise;
+};
+
 export default calculateBmi;
