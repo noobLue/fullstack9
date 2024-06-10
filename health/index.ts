@@ -9,7 +9,7 @@ app.get("/hello", (_req, res) => {
 
 app.get("/bmi", (req, res) => {
   if (!req.query.weight || !req.query.height) {
-    return res.status(422).json({ error: "weight or height missing" });
+    return res.status(422).json({ error: "missing parameters" });
   }
 
   const weight: number = Number(req.query.weight);
