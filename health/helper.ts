@@ -80,7 +80,6 @@ export const calculateExercises = (
   dailyHours: number[],
   target: number
 ): Exercise => {
-  console.log(dailyHours);
   const periodLength: number = dailyHours.length;
   const average: number =
     dailyHours.reduce((acc, h) => acc + h, 0) / periodLength;
