@@ -1,6 +1,8 @@
-import { Patient } from "../types";
+import { Patient, NewPatient } from "../types";
+import { v1 as uuid } from "uuid";
+import { ToNewPatient } from "../utils";
 
-const data: Patient[] = [
+const data = [
   {
     id: "d2773336-f723-11e9-8f0b-362b9e155667",
     name: "John McClane",
@@ -43,4 +45,24 @@ const data: Patient[] = [
   },
 ];
 
-export default data;
+const patients: Patient[] = data.map((d) => {
+  return {
+    id: d.id,
+    ...ToNewPatient(d),
+  } as Patient;
+});
+
+export const AddPatient = (newPatient: NewPatient): Patient => {
+  const id: string = uuid();
+
+  const patient: Patient = {
+    id,
+    ...newPatient,
+  };
+
+  patients.push(patient);
+
+  return patient;
+};
+
+export default patients;

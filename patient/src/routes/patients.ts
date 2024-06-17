@@ -1,6 +1,7 @@
 import express from "express";
-import patients from "../data/patients";
+import patients, { AddPatient } from "../data/patients";
 import { PatientFront } from "../types";
+import { ToNewPatient } from "../utils";
 
 const router = express.Router();
 
@@ -16,6 +17,22 @@ router.get("/", (_req, res) => {
   });
 
   res.status(200).json(pf);
+});
+
+router.post("/", (req, res) => {
+  try {
+    const patient = AddPatient(ToNewPatient(req.body));
+
+    res.json(patient);
+  } catch (exception: unknown) {
+    let message: string = "Failed to add person: ";
+
+    if (exception instanceof Error) {
+      message += exception.message;
+    }
+
+    res.status(400).send(message);
+  }
 });
 
 export default router;
