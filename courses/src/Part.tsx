@@ -25,8 +25,6 @@ const RenderDescription = ({ description }: { description: string }) => {
 };
 
 const Part = ({ part }: { part: CoursePart }) => {
-  console.log(part);
-
   switch (part.kind) {
     case "basic":
       return (
